@@ -1,3 +1,4 @@
+<%@ tag language="java" pageEncoding="UTF-8"%>
 <delete-refresh>
 <a if="{ state.id }" class="btn waves-effect waves-light red modal-trigger tooltipped"
 	data-tooltip="Delete" 

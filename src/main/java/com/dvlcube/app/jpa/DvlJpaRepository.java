@@ -157,13 +157,13 @@ public class DvlJpaRepository<T extends MxBean<? extends Serializable>, ID exten
 	}
 
 	@Override
-	public List<T> findAllLike(String id) {
-		if ($(id).isBlank())
+	public List<T> findAllLike(String name) {
+		if ($(name).isBlank())
 			return firstPage();
 
-		id = id.toLowerCase();
+		name = name.toLowerCase();
 
-		String idParam = "id";
+		String idParam = "name";
 
 		Like like = ei.getJavaType().getAnnotation(Like.class);
 		if (like != null) {
@@ -182,8 +182,8 @@ public class DvlJpaRepository<T extends MxBean<? extends Serializable>, ID exten
 
 		return em.createQuery(//
 				"SELECT e FROM " + ei.getEntityName() //
-						+ " e WHERE lower(" + idParam + ") LIKE :id") //
-				.setParameter("id", "%" + id + "%") //
+						+ " e WHERE lower(" + idParam + ") LIKE :name") //
+				.setParameter("name", "%" + name + "%") //
 				.setMaxResults(DEFAULT_PAGE_SIZE) //
 				.getResultList();
 	}
@@ -242,5 +242,14 @@ public class DvlJpaRepository<T extends MxBean<? extends Serializable>, ID exten
 		HashMap<String, String> map = new HashMap<>();
 		map.put(key, val);
 		return findAllBy(map);
+	}
+
+	@Override
+	public T findByName(String name) {
+		List<T> list = findAllBy("name", name);
+		if (list != null && !list.isEmpty()) {
+			return list.get(0);
+		}
+		return null;
 	}
 }

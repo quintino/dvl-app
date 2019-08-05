@@ -46,7 +46,7 @@ public class RestAspect implements MxAspect {
 	 * @since 12 de abr de 2019
 	 * @author Ulisses Lima
 	 */
-	@Around("execution(* com.dvlcube.app.rest.*.post(..)) && args(body,..)")
+	@Around("execution(* com.dvlcube.app.rest.*.*(..)) && args(body,..)")
 	public Object postDebug(ProceedingJoinPoint point, MxBean<? extends Serializable> body) throws Throwable {
 		try {
 			return point.proceed();
